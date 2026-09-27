@@ -1,0 +1,15 @@
+clear; clc; clf();
+Fs = 600;
+n = 0:20;
+x = sin(480*%pi*n/Fs) + 3*sin(720*%pi*n/Fs);
+x_alias = -2*sin(4*%pi*n/5);
+alias_error = max(abs(x-x_alias));
+t = linspace(0, 0.025, 1201);
+xa = sin(480*%pi*t) + 3*sin(720*%pi*t);
+ya = -2*sin(480*%pi*t);
+disp("FN, folding frequency (Hz), sample equality error:");
+disp([720 Fs/2 alias_error]);
+subplot(3,1,1); plot(t,xa); title("Original analog signal"); xlabel("t (s)"); ylabel("xa(t)");
+subplot(3,1,2); plot2d3(n,x); plot(n,x_alias,"ro");
+title("Samples and -2*sin(4*pi*n/5)"); xlabel("n"); ylabel("x(n)");
+subplot(3,1,3); plot(t,ya); title("Ideal reconstructed signal"); xlabel("t (s)"); ylabel("ya(t)");

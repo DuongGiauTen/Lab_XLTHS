@@ -1,0 +1,20 @@
+clear; clc; clf();
+R = 10000; L = 1024;
+b = log(L)/log(2);
+Fs = R/b;
+folding = Fs/2;
+FN = 2*900;
+Delta = 10/(L-1);
+n = 0:20;
+x = 3*cos(600*%pi*n/Fs) + 2*cos(1800*%pi*n/Fs);
+x_alias = 3*cos(0.6*%pi*n) + 2*cos(0.2*%pi*n);
+alias_error = max(abs(x-x_alias));
+// Minh hoa luong tu theo 1024 muc co hai dau mut -5 va 5.
+xq = -5 + Delta*floor((x+5)/Delta + 1e-10);
+eq = xq-x;
+disp("bits/sample, Fs, folding, FN, Delta:"); disp([b Fs folding FN Delta]);
+disp("alias error and maximum absolute quantization error:"); disp([alias_error max(abs(eq))]);
+subplot(2,1,1); plot2d3(n,x); plot(n,x_alias,"ro");
+title("Samples: original and equivalent frequencies"); xlabel("n"); ylabel("x(n)");
+subplot(2,1,2); plot2d3(n,eq);
+title("Quantization error: 1024 levels in [-5,5]"); xlabel("n"); ylabel("eq(n)");

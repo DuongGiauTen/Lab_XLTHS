@@ -1,0 +1,16 @@
+clear; clc; clf();
+Fs = 8000;
+Fmax = 10000;
+FN = 2*Fmax;
+n = 0:24;
+x5 = cos(2*%pi*5000*n/Fs);
+a3 = cos(2*%pi*3000*n/Fs);
+x9 = cos(2*%pi*9000*n/Fs);
+a1 = cos(2*%pi*1000*n/Fs);
+alias_error = [max(abs(x5-a3)) max(abs(x9-a1))];
+disp("Nyquist rate and folding frequency (Hz):"); disp([FN Fs/2]);
+disp("Alias errors for 5->3 kHz and 9->1 kHz:"); disp(alias_error);
+subplot(2,1,1); plot2d3(n,x5); plot(n,a3,"ro");
+title("5 kHz stems = 3 kHz circles at Fs = 8 kHz"); xlabel("n"); ylabel("Amplitude");
+subplot(2,1,2); plot2d3(n,x9); plot(n,a1,"ro");
+title("9 kHz stems = 1 kHz circles at Fs = 8 kHz"); xlabel("n"); ylabel("Amplitude");
